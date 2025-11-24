@@ -176,6 +176,11 @@ public class Week11Lab {
             }
         }
     }
+    public static final String color = "\u001B[34m";
+
+    public static final String reset = "\u001B[0m";
+
+
 
     public static void highlightWord(String word) {
         word = word.toUpperCase();
@@ -185,7 +190,7 @@ public class Week11Lab {
             if (index != -1) {
                 String beforeWord = row.substring(0, index);
                 String afterWord = row.substring(index + word.length());
-                grid[i] = beforeWord + "[" + word + "]" + afterWord;
+                grid[i] = beforeWord + "[" + color + word + reset + "]" + afterWord;
                 break;
             }
         }
