@@ -19,7 +19,7 @@ public class Week10Lab {
 
     static String[] grid = new String[gridTemplate.length];
 
-    public static void resetGrid() {
+    public static void resetGrid() {        //reset grid each time and also filled in the grid
         for (int i = 0; i < gridTemplate.length; i++) {
             grid[i] = gridTemplate[i];
         }
@@ -67,13 +67,13 @@ public class Week10Lab {
     public static void highlightWord(String word) {
         word = word.toUpperCase();
         for (int i = 0; i < grid.length; i++) {
-            String row = grid[i];
-            int index = row.indexOf(word);
+            String row = grid[i];  //go through each string in string array
+            int index = row.indexOf(word);  //index of the first char of word in the row
             if (index != -1) {
                 String beforeWord = row.substring(0, index);
                 String afterWord = row.substring(index + word.length());
-                grid[i] = beforeWord + "[" + word + "]" + afterWord;
-                break;
+                grid[i] = beforeWord + "[" + word + "]" + afterWord;  //put in klammern
+                break;  //forgotten lol break so that it doesnt print out FIVE two times in grid
             }
         }
     }

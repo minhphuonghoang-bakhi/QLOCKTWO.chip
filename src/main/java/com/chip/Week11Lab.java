@@ -213,14 +213,14 @@ public class Week11Lab {
 
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        // --- Language selection ---
+        //  Language selection
         System.out.println("press 1 or 2 to choose language: 1 = English, 2 = German");
         int choice = input.nextInt();
         currentLanguage = (choice == 2) ? Language.GERMAN : Language.ENGLISH;
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
         while (true) {  // Run continuously
-            resetGrid();
+            resetGrid();  //reset for each loop and also fill the empty grid before hightlightWord
 
             LocalTime now = LocalTime.now();
             int hour = now.getHour();
@@ -245,7 +245,7 @@ public class Week11Lab {
             highlightWord(currentLanguage == Language.GERMAN ? "ES" : "IT");
             highlightWord(currentLanguage == Language.GERMAN ? "IST" : "IS");
 
-            for (String part : minuteWord.split(" ")) highlightWord(part);
+            for (String part : minuteWord.split(" ")) highlightWord(part);  //highlight each word in "TEN PAST"
             highlightWord(hourWord);
 
             // Display
