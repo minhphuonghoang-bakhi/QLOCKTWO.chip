@@ -37,6 +37,18 @@ public class Week11Lab {
 
     static String[] grid = new String[10];
 
+    // ENGLISH
+    static final int MINUTE_FIVE_ROW_EN = 2;  // TWENTYFIVEX
+    static final int MINUTE_TEN_ROW_EN  = 3;  // HALFSTENFTO
+    static final int HOUR_FIVE_ROW_EN   = 6;  // FOURFIVETWO
+    static final int HOUR_TEN_ROW_EN    = 9;  // TENSEO'CLOCK
+
+    // GERMAN
+    static final int MINUTE_FIVE_ROW_DE = 0;  // FÜNF
+    static final int MINUTE_TEN_ROW_DE  = 1;  // ZEHN
+    static final int HOUR_FIVE_ROW_DE   = 6;  // FÜNF
+    static final int HOUR_TEN_ROW_DE    = 8;  // ZEHN
+
     public static void resetGrid() {
         if (currentLanguage == Language.GERMAN) {
             for (int i = 0; i < gridTemplateGerman.length; i++) {
@@ -182,19 +194,33 @@ public class Week11Lab {
 
 
 
-    public static void highlightWord(String word) {
+    static void highlightWordAnywhere(String word) {
         word = word.toUpperCase();
         for (int i = 0; i < grid.length; i++) {
-            String row = grid[i];
-            int index = row.indexOf(word);
-            if (index != -1) {
-                String beforeWord = row.substring(0, index);
-                String afterWord = row.substring(index + word.length());
-                grid[i] = beforeWord + "[" + color + word + reset + "]" + afterWord;
-                break;
+            if (grid[i].contains("[" + word)) return; // already highlighted
+            int idx = grid[i].indexOf(word);
+            if (idx != -1) {
+                grid[i] =
+                        grid[i].substring(0, idx)
+                                + "[" + color + word + reset + "]"
+                                + grid[i].substring(idx + word.length());
+                return;
             }
         }
     }
+
+    public static void highlightWordInRow(String word, int rowIndex) {
+        word = word.toUpperCase();
+        String row = grid[rowIndex];
+
+        int index = row.indexOf(word);
+        if (index != -1) {
+            String before = row.substring(0, index);
+            String after = row.substring(index + word.length());
+            grid[rowIndex] = before + "[" + color + word + reset + "]" + after;
+        }
+    }
+
 
     public static void displayGridWithDots(int leftoverMinutes) {
         for (String row : grid) {
@@ -230,23 +256,56 @@ public class Week11Lab {
             int leftoverMinutes = minute % 5;
 
             // Adjust hour if minute word contains "To" / "VOR"
+            // Convert to 12-hour format first
+            hour = hour % 12;
+            if (hour == 0) hour = 12;
+
+            // THEN handle "To" / "VOR"
             if (minuteWord.contains("To") || minuteWord.contains("VOR")) {
                 hour++;
                 if (hour > 12) hour = 1;
-            } else if (hour > 12) {
-                hour -= 12;
             }
-
-            if (hour == 0) hour = 12;
 
             String hourWord = PrintHour(hour);
 
-            // Highlight words
-            highlightWord(currentLanguage == Language.GERMAN ? "ES" : "IT");
-            highlightWord(currentLanguage == Language.GERMAN ? "IST" : "IS");
+            // Highlight "IT IS" or "ES IST"
+            highlightWordAnywhere(currentLanguage == Language.GERMAN ? "ES" : "IT");
+            highlightWordAnywhere(currentLanguage == Language.GERMAN ? "IST" : "IS");
 
-            for (String part : minuteWord.split(" ")) highlightWord(part);  //highlight each word in "TEN PAST"
-            highlightWord(hourWord);
+
+            // Minute words
+            for (String w : minuteWord.split(" ")) {
+                w = w.toUpperCase();   // ignore uppercase
+                switch (w) {
+                    case "FIVE", "FÜNF" ->
+                            highlightWordInRow(w,
+                                    currentLanguage == Language.ENGLISH
+                                            ? MINUTE_FIVE_ROW_EN
+                                            : MINUTE_FIVE_ROW_DE);
+                    case "TEN", "ZEHN" ->
+                            highlightWordInRow(w,
+                                    currentLanguage == Language.ENGLISH
+                                            ? MINUTE_TEN_ROW_EN
+                                            : MINUTE_TEN_ROW_DE);
+                    default -> highlightWordAnywhere(w);
+                }
+            }
+
+            // Hour word
+            String hWord = PrintHour(hour);
+            switch (hWord) {
+                case "FIVE", "FÜNF" ->
+                        highlightWordInRow(hWord,
+                                currentLanguage == Language.ENGLISH
+                                        ? HOUR_FIVE_ROW_EN
+                                        : HOUR_FIVE_ROW_DE);
+                case "TEN", "ZEHN" ->
+                        highlightWordInRow(hWord,
+                                currentLanguage == Language.ENGLISH
+                                        ? HOUR_TEN_ROW_EN
+                                        : HOUR_TEN_ROW_DE);
+                default -> highlightWordAnywhere(hWord);
+            }
 
             // Display
             System.out.println("Current time: " + now.format(timeFormatter));
