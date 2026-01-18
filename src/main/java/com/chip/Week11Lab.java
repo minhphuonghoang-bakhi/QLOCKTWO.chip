@@ -192,8 +192,6 @@ public class Week11Lab {
 
     public static final String reset = "\u001B[0m";
 
-
-
     static void highlightWordAnywhere(String word) {
         word = word.toUpperCase();
         for (int i = 0; i < grid.length; i++) {
@@ -255,12 +253,12 @@ public class Week11Lab {
             String minuteWord = MinutesNearestToFive(minute);
             int leftoverMinutes = minute % 5;
 
-            // Adjust hour if minute word contains "To" / "VOR"
-            // Convert to 12-hour format first
+            //Adjust hour if minute word contains "To" / "VOR"
+            //Convert to 12-hour format first
             hour = hour % 12;
             if (hour == 0) hour = 12;
 
-            // THEN handle "To" / "VOR"
+            //then handle "To" / "VOR"
             if (minuteWord.contains("To") || minuteWord.contains("VOR")) {
                 hour++;
                 if (hour > 12) hour = 1;
@@ -273,34 +271,33 @@ public class Week11Lab {
             highlightWordAnywhere(currentLanguage == Language.GERMAN ? "IST" : "IS");
 
 
-            // Minute words
+            //for the case five to five or ten past ten, prints out ten and five 2 times instead of just one time
+            //Minute word
             for (String w : minuteWord.split(" ")) {
                 w = w.toUpperCase();   // ignore uppercase
                 switch (w) {
-                    case "FIVE", "FÜNF" ->
-                            highlightWordInRow(w,
-                                    currentLanguage == Language.ENGLISH
+                    case "FIVE", "FÜNF"
+                    -> highlightWordInRow(w, currentLanguage == Language.ENGLISH
                                             ? MINUTE_FIVE_ROW_EN
                                             : MINUTE_FIVE_ROW_DE);
-                    case "TEN", "ZEHN" ->
-                            highlightWordInRow(w,
-                                    currentLanguage == Language.ENGLISH
+                    case "TEN", "ZEHN"
+                    -> highlightWordInRow(w, currentLanguage == Language.ENGLISH
                                             ? MINUTE_TEN_ROW_EN
                                             : MINUTE_TEN_ROW_DE);
                     default -> highlightWordAnywhere(w);
                 }
             }
 
-            // Hour word
+            //Hour word
             String hWord = PrintHour(hour);
             switch (hWord) {
-                case "FIVE", "FÜNF" ->
-                        highlightWordInRow(hWord,
+                case "FIVE", "FÜNF"
+                -> highlightWordInRow(hWord,
                                 currentLanguage == Language.ENGLISH
                                         ? HOUR_FIVE_ROW_EN
                                         : HOUR_FIVE_ROW_DE);
-                case "TEN", "ZEHN" ->
-                        highlightWordInRow(hWord,
+                case "TEN", "ZEHN"
+                -> highlightWordInRow(hWord,
                                 currentLanguage == Language.ENGLISH
                                         ? HOUR_TEN_ROW_EN
                                         : HOUR_TEN_ROW_DE);

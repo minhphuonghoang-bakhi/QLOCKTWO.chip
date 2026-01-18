@@ -55,4 +55,74 @@ public class Week11LabTest {
         Week11Lab.currentLanguage = Week11Lab.Language.GERMAN;
         assertEquals("FÜNF NACH", Week11Lab.MinutesNearestToFive(6));
     }
+    // Test for case 22:10 - expected: Ten past Ten in 12h Format
+    @Test
+    void test_22_10() {
+        int hour = 22;
+        int minute = 10;
+
+        String minuteWord = Week11Lab.MinutesNearestToFive(minute);
+        int leftoverMinutes = minute % 5;
+
+        hour = hour % 12;
+        if (hour == 0) hour = 12;
+
+        if (minuteWord.contains("To")) {
+            hour++;
+            if (hour > 12) hour = 1;
+        }
+
+        String hourWord = Week11Lab.PrintHour(hour);
+
+        assertEquals("Ten Past", minuteWord);
+        assertEquals(0, leftoverMinutes);
+        assertEquals("Ten", hourWord);
+    }
+
+    // Test for case 17:07 - expected: Five past Five in 12h Format
+    @Test
+    void test_17_07() {
+        int hour = 17;
+        int minute = 7;
+
+        String minuteWord = Week11Lab.MinutesNearestToFive(minute);
+        int leftoverMinutes = minute % 5;
+
+        hour = hour % 12;
+        if (hour == 0) hour = 12;
+
+        if (minuteWord.contains("To")) {
+            hour++;
+            if (hour > 12) hour = 1;
+        }
+
+        String hourWord = Week11Lab.PrintHour(hour);
+
+        assertEquals("Five Past", minuteWord);
+        assertEquals(2, leftoverMinutes);
+        assertEquals("Five", hourWord);
+    }
+// case 21:18 expected Twenty past Nine (test for the switching to the 12H format)
+    @Test
+    void test_21_18() {
+        int hour = 21;
+        int minute = 18;
+
+        String minuteWord = Week11Lab.MinutesNearestToFive(minute);
+        int leftoverMinutes = minute % 5;
+
+        hour = hour % 12;
+        if (hour == 0) hour = 12;
+
+        if (minuteWord.contains("To")) {
+            hour++;
+            if (hour > 12) hour = 1;
+        }
+
+        String hourWord = Week11Lab.PrintHour(hour);
+
+        assertEquals("Twenty Past", minuteWord);
+        assertEquals(3, leftoverMinutes);
+        assertEquals("Nine", hourWord);
+    }
 }

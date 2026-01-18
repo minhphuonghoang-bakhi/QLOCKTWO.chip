@@ -93,7 +93,7 @@ BSECHSFMUHR
 
 Minute dots: ● ● ● ○
 ```
-**Reading**: "ES IST HALB DREI" + 3 dots = 15:28 (half past two = 2:30, rounded from 2:28)
+**Reading**: "ES IST HALB DREI" + 3 dots = 15:28 (half past three = 3:30, rounded from 3:28)
 
 ## How the Clock Works
 
