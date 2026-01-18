@@ -63,8 +63,8 @@ BSECHSFMUHR
 ```
 Current time: 10:17:34
 [IT][IS]ASAMPM
-ACQUARTERDC
-[TWENTY]FIVEX
+AC[QUARTER]DC
+TWENTYFIVEX
 HALFSTENFTO
 [PAST]ERUNINE
 ONESIXTHREE
@@ -75,7 +75,7 @@ SEVENTWELVE
 
 Minute dots: ● ● ○ ○
 ```
-**Reading**: "IT IS TWENTY PAST TEN" + 2 dots = 10:17
+**Reading**: "IT IS QUARTER PAST TEN" + 2 dots = 10:17
 
 **German - 15:28**
 ```
@@ -99,7 +99,7 @@ Minute dots: ● ● ● ○
 
 ### Time Rounding
 - Minutes are rounded to the nearest 5-minute interval
-- **Example**: 10:17 → 10:15 ("Twenty Past Ten") + 2 dots
+- **Example**: 10:17 → 10:15 ("Quarter Past Ten") + 2 dots
 
 ### Hour Adjustment
 - For times using "TO" (English) or "VOR" (German), the hour advances by one
